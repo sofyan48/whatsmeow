@@ -28,15 +28,15 @@ import (
 	"github.com/mdp/qrterminal/v3"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/appstate"
-	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
-	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store/sqlstore"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types/events"
-	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
+	"github.com/sofyan48/whatsmeow/"
+	appstate "github.com/sofyan48/whatsmeow/appstate"
+	waBinary "github.com/sofyan48/whatsmeow/binary"
+	waProto "github.com/sofyan48/whatsmeow/binary/proto"
+	store "github.com/sofyan48/whatsmeow/store"
+	"github.com/sofyan48/whatsmeow/store/sqlstore"
+	types "github.com/sofyan48/whatsmeow/types"
+	"github.com/sofyan48/whatsmeow/types/events"
+	waLog "github.com/sofyan48/whatsmeow/util/log"
 )
 
 var cli *whatsmeow.Client

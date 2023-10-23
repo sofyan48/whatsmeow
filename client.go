@@ -21,15 +21,15 @@ import (
 
 	"go.mau.fi/util/random"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/appstate"
-	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
-	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/socket"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types/events"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/keys"
-	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
+	"github.com/sofyan48/whatsmeow/appstate"
+	waBinary "github.com/sofyan48/whatsmeow/binary"
+	waProto "github.com/sofyan48/whatsmeow/binary/proto"
+	"github.com/sofyan48/whatsmeow/socket"
+	"github.com/sofyan48/whatsmeow/store"
+	"github.com/sofyan48/whatsmeow/types"
+	"github.com/sofyan48/whatsmeow/types/events"
+	"github.com/sofyan48/whatsmeow/util/keys"
+	waLog "github.com/sofyan48/whatsmeow/util/log"
 )
 
 // EventHandler is a function that can handle events from WhatsApp.

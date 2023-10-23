@@ -19,8 +19,8 @@ import (
 
 	"go.mau.fi/util/random"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/socket"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/cbcutil"
+	"github.com/sofyan48/whatsmeow/socket"
+	"github.com/sofyan48/whatsmeow/util/cbcutil"
 )
 
 // UploadResponse contains the data from the attachment upload, which can be put into a message to send the attachment.

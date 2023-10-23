@@ -11,7 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
+	types "github.com/sofyan48/whatsmeow/types"
 )
 
 // Attrs is a type alias for the attributes of an XML element (Node).

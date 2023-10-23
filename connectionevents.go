@@ -10,10 +10,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types/events"
+	waBinary "github.com/sofyan48/whatsmeow/binary"
+	"github.com/sofyan48/whatsmeow/store"
+	"github.com/sofyan48/whatsmeow/types"
+	"github.com/sofyan48/whatsmeow/types/events"
 )
 
 func (cli *Client) handleStreamError(node *waBinary.Node) {

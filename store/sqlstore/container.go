@@ -14,11 +14,11 @@ import (
 
 	"go.mau.fi/util/random"
 
-	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/keys"
-	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
+	waProto "github.com/sofyan48/whatsmeow/binary/proto"
+	store "github.com/sofyan48/whatsmeow/store"
+	types "github.com/sofyan48/whatsmeow/types"
+	"github.com/sofyan48/whatsmeow/util/keys"
+	waLog "github.com/sofyan48/whatsmeow/util/log"
 )
 
 // Container is a wrapper for a SQL database that can contain multiple whatsmeow sessions.

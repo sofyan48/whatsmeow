@@ -13,10 +13,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store/sqlstore"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types/events"
-	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
+	"github.com/sofyan48/whatsmeow"
+	"github.com/sofyan48/whatsmeow/store/sqlstore"
+	"github.com/sofyan48/whatsmeow/types/events"
+	waLog "github.com/sofyan48/whatsmeow/util/log"
 )
 
 func eventHandler(evt interface{}) {

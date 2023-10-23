@@ -16,9 +16,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/keys"
+	store "github.com/sofyan48/whatsmeow/store"
+	types "github.com/sofyan48/whatsmeow/types"
+	"github.com/sofyan48/whatsmeow/util/keys"
 )
 
 // ErrInvalidLength is returned by some database getters if the database returned a byte array with an unexpected length.

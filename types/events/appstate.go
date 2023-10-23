@@ -9,9 +9,9 @@ package events
 import (
 	"time"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/appstate"
-	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
+	appstate "github.com/sofyan48/whatsmeow/appstate"
+	waProto "github.com/sofyan48/whatsmeow/binary/proto"
+	types "github.com/sofyan48/whatsmeow/types"
 )
 
 // Contact is emitted when an entry in the user's contact list is modified from another device.

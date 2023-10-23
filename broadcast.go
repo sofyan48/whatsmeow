@@ -10,8 +10,8 @@ import (
 	"errors"
 	"fmt"
 
-	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
+	waBinary "github.com/sofyan48/whatsmeow/binary"
+	types "github.com/sofyan48/whatsmeow/types"
 )
 
 func (cli *Client) getBroadcastListParticipants(jid types.JID) ([]types.JID, error) {

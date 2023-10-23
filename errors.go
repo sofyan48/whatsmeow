@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"net/http"
 
-	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
+	waBinary "github.com/sofyan48/whatsmeow/binary"
 )
 
 // Miscellaneous errors

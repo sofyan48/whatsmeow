@@ -13,7 +13,7 @@ package lthash
 import (
 	"encoding/binary"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/hkdfutil"
+	"github.com/sofyan48/whatsmeow/util/hkdfutil"
 )
 
 type LTHash struct {

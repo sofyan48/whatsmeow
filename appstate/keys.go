@@ -11,9 +11,9 @@ import (
 	"encoding/base64"
 	"sync"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/hkdfutil"
-	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
+	store "github.com/sofyan48/whatsmeow/store"
+	"github.com/sofyan48/whatsmeow/util/hkdfutil"
+	waLog "github.com/sofyan48/whatsmeow/util/log"
 )
 
 // WAPatchName represents a type of app state patch.

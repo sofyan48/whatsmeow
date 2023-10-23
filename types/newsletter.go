@@ -13,7 +13,7 @@ import (
 
 	"go.mau.fi/util/jsontime"
 
-	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
+	waProto "github.com/sofyan48/whatsmeow/binary/proto"
 )
 
 type NewsletterVerificationState string

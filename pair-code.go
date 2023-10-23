@@ -19,10 +19,10 @@ import (
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/pbkdf2"
 
-	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/hkdfutil"
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/keys"
+	waBinary "github.com/sofyan48/whatsmeow/binary"
+	"github.com/sofyan48/whatsmeow/types"
+	"github.com/sofyan48/whatsmeow/util/hkdfutil"
+	"github.com/sofyan48/whatsmeow/util/keys"
 )
 
 // PairClientType is the type of client to use with PairCode.

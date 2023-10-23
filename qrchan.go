@@ -12,8 +12,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types/events"
-	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
+	"github.com/sofyan48/whatsmeow/types/events"
+	waLog "github.com/sofyan48/whatsmeow/util/log"
 )
 
 type QRChannelItem struct {
