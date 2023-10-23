@@ -9,8 +9,8 @@ package whatsmeow
 import (
 	"context"
 
-	waBinary "go.mau.fi/whatsmeow/binary"
-	"go.mau.fi/whatsmeow/types"
+	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
 )
 
 type DangerousInternalClient struct {

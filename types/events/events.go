@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"time"
 
-	waBinary "go.mau.fi/whatsmeow/binary"
-	waProto "go.mau.fi/whatsmeow/binary/proto"
-	"go.mau.fi/whatsmeow/types"
+	waBinary "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary"
+	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
 )
 
 // QR is emitted after connecting when there's no session data in the device store.

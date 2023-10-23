@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"hash"
 
-	"go.mau.fi/whatsmeow/appstate/lthash"
-	waProto "go.mau.fi/whatsmeow/binary/proto"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/appstate/lthash"
+	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
 )
 
 type Mutation struct {

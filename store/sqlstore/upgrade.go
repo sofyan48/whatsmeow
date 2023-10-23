@@ -38,7 +38,7 @@ func (c *Container) setVersion(tx *sql.Tx, version int) error {
 	if err != nil {
 		return err
 	}
-	_, err = tx.Exec("INSERT INTO whatsmeow_version (version) VALUES ($1)", version)
+	_, err = tx.Exec("INSERT INTO whatsmeow_version (version) VALUES (?)", version)
 	return err
 }
 

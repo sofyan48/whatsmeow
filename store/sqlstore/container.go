@@ -14,11 +14,11 @@ import (
 
 	"go.mau.fi/util/random"
 
-	waProto "go.mau.fi/whatsmeow/binary/proto"
-	"go.mau.fi/whatsmeow/store"
-	"go.mau.fi/whatsmeow/types"
-	"go.mau.fi/whatsmeow/util/keys"
-	waLog "go.mau.fi/whatsmeow/util/log"
+	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/keys"
+	waLog "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/log"
 )
 
 // Container is a wrapper for a SQL database that can contain multiple whatsmeow sessions.
@@ -91,7 +91,7 @@ SELECT jid, registration_id, noise_key, identity_key,
 FROM whatsmeow_device
 `
 
-const getDeviceQuery = getAllDevicesQuery + " WHERE jid=$1"
+const getDeviceQuery = getAllDevicesQuery + " WHERE jid=?"
 
 type scannable interface {
 	Scan(dest ...interface{}) error
@@ -185,16 +185,16 @@ func (c *Container) GetDevice(jid types.JID) (*store.Device, error) {
 }
 
 const (
-	insertDeviceQuery = `
-		INSERT INTO whatsmeow_device (jid, registration_id, noise_key, identity_key,
-									  signed_pre_key, signed_pre_key_id, signed_pre_key_sig,
-									  adv_key, adv_details, adv_account_sig, adv_account_sig_key, adv_device_sig,
-									  platform, business_name, push_name)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
-		ON CONFLICT (jid) DO UPDATE
-		    SET platform=excluded.platform, business_name=excluded.business_name, push_name=excluded.push_name
-	`
-	deleteDeviceQuery = `DELETE FROM whatsmeow_device WHERE jid=$1`
+	insertDeviceQuery = `INSERT INTO whatsmeow_device (jid, registration_id, noise_key, identity_key,
+		signed_pre_key, signed_pre_key_id, signed_pre_key_sig,
+				adv_key, adv_details, adv_account_sig, adv_account_sig_key, adv_device_sig,
+				platform, business_name, push_name)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		ON DUPLICATE KEY UPDATE
+		platform = VALUES(platform),
+		business_name = VALUES(business_name),
+		push_name = VALUES(push_name)`
+	deleteDeviceQuery = `DELETE FROM whatsmeow_device WHERE jid=?`
 )
 
 // NewDevice creates a new device in this database.

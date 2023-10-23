@@ -9,7 +9,7 @@ package types
 import (
 	"time"
 
-	waProto "go.mau.fi/whatsmeow/binary/proto"
+	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
 )
 
 // VerifiedName contains verified WhatsApp business details.

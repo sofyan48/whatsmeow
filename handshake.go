@@ -13,9 +13,9 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	waProto "go.mau.fi/whatsmeow/binary/proto"
-	"go.mau.fi/whatsmeow/socket"
-	"go.mau.fi/whatsmeow/util/keys"
+	waProto "github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/proto"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/socket"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/util/keys"
 )
 
 const NoiseHandshakeResponseTimeout = 20 * time.Second

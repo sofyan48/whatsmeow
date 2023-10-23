@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"go.mau.fi/whatsmeow/types"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
 )
 
 // AttrUtility is a helper struct for reading multiple XML attributes and checking for errors afterwards.

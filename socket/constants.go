@@ -13,7 +13,7 @@ package socket
 import (
 	"errors"
 
-	"go.mau.fi/whatsmeow/binary/token"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/token"
 )
 
 const (

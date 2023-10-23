@@ -13,8 +13,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"go.mau.fi/whatsmeow/socket"
-	"go.mau.fi/whatsmeow/store"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/socket"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/store"
 )
 
 // CheckUpdateResponse is the data returned by CheckUpdate.

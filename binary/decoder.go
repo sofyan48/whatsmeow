@@ -5,8 +5,8 @@ import (
 	"io"
 	"strings"
 
-	"go.mau.fi/whatsmeow/binary/token"
-	"go.mau.fi/whatsmeow/types"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/binary/token"
+	"github.com/kiriminaja/kaj-notification-srvc/src/pkg/whatsapp/whatsmeow/types"
 )
 
 type binaryDecoder struct {
