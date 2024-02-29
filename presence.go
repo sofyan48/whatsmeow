@@ -8,7 +8,6 @@ package whatsmeow
 
 import (
 	"fmt"
-	"sync/atomic"
 
 	waBinary "github.com/sofyan48/whatsmeow/binary"
 	types "github.com/sofyan48/whatsmeow/types"
@@ -66,9 +65,9 @@ func (cli *Client) SendPresence(state types.Presence) error {
 		return ErrNoPushName
 	}
 	if state == types.PresenceAvailable {
-		atomic.CompareAndSwapUint32(&cli.sendActiveReceipts, 0, 1)
+		cli.sendActiveReceipts.CompareAndSwap(0, 1)
 	} else {
-		atomic.CompareAndSwapUint32(&cli.sendActiveReceipts, 1, 0)
+		cli.sendActiveReceipts.CompareAndSwap(1, 0)
 	}
 	return cli.sendNode(waBinary.Node{
 		Tag: "presence",
