@@ -88,25 +88,25 @@ func (c *Container) Upgrade() error {
 
 func upgradeV1(tx *sql.Tx, _ *Container) error {
 	_, err := tx.Exec(`CREATE TABLE whatsmeow_device (
-		jid TEXT PRIMARY KEY,
+		jid VARCHAR(255) PRIMARY KEY,
 
 		registration_id BIGINT NOT NULL CHECK ( registration_id >= 0 AND registration_id < 4294967296 ),
 
-		noise_key    bytea NOT NULL CHECK ( length(noise_key) = 32 ),
-		identity_key bytea NOT NULL CHECK ( length(identity_key) = 32 ),
+		noise_key    TEXT NOT NULL CHECK ( length(noise_key) = 32 ),
+		identity_key TEXT NOT NULL CHECK ( length(identity_key) = 32 ),
 
-		signed_pre_key     bytea   NOT NULL CHECK ( length(signed_pre_key) = 32 ),
+		signed_pre_key     TEXT   NOT NULL CHECK ( length(signed_pre_key) = 32 ),
 		signed_pre_key_id  INTEGER NOT NULL CHECK ( signed_pre_key_id >= 0 AND signed_pre_key_id < 16777216 ),
-		signed_pre_key_sig bytea   NOT NULL CHECK ( length(signed_pre_key_sig) = 64 ),
+		signed_pre_key_sig TEXT   NOT NULL CHECK ( length(signed_pre_key_sig) = 64 ),
 
-		adv_key         bytea NOT NULL,
-		adv_details     bytea NOT NULL,
-		adv_account_sig bytea NOT NULL CHECK ( length(adv_account_sig) = 64 ),
-		adv_device_sig  bytea NOT NULL CHECK ( length(adv_device_sig) = 64 ),
+		adv_key         TEXT NOT NULL,
+		adv_details     TEXT NOT NULL,
+		adv_account_sig TEXT NOT NULL CHECK ( length(adv_account_sig) = 64 ),
+		adv_device_sig  TEXT NOT NULL CHECK ( length(adv_device_sig) = 64 ),
 
-		platform      TEXT NOT NULL DEFAULT '',
-		business_name TEXT NOT NULL DEFAULT '',
-		push_name     TEXT NOT NULL DEFAULT ''
+		platform      VARCHAR(255) NOT NULL DEFAULT 'macos',
+		business_name VARCHAR(255) NOT NULL DEFAULT 'agent',
+		push_name     VARCHAR(255) NOT NULL DEFAULT 'agent'
 	)`)
 	if err != nil {
 		return err
@@ -114,7 +114,7 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_identity_keys (
 		our_jid  TEXT,
 		their_id TEXT,
-		identity bytea NOT NULL CHECK ( length(identity) = 32 ),
+		identity TEXT NOT NULL CHECK ( length(identity) = 32 ),
 
 		PRIMARY KEY (our_jid, their_id),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -125,7 +125,7 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_pre_keys (
 		jid      TEXT,
 		key_id   INTEGER          CHECK ( key_id >= 0 AND key_id < 16777216 ),
-		key      bytea   NOT NULL CHECK ( length(key) = 32 ),
+		key      TEXT   NOT NULL CHECK ( length(key) = 32 ),
 		uploaded BOOLEAN NOT NULL,
 
 		PRIMARY KEY (jid, key_id),
@@ -137,7 +137,7 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_sessions (
 		our_jid  TEXT,
 		their_id TEXT,
-		session  bytea,
+		session  TEXT,
 
 		PRIMARY KEY (our_jid, their_id),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -149,7 +149,7 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 		our_jid    TEXT,
 		chat_id    TEXT,
 		sender_id  TEXT,
-		sender_key bytea NOT NULL,
+		sender_key TEXT NOT NULL,
 
 		PRIMARY KEY (our_jid, chat_id, sender_id),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -159,10 +159,10 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_app_state_sync_keys (
 		jid         TEXT,
-		key_id      bytea,
-		key_data    bytea  NOT NULL,
+		key_id      TEXT,
+		key_data    TEXT  NOT NULL,
 		timestamp   BIGINT NOT NULL,
-		fingerprint bytea  NOT NULL,
+		fingerprint TEXT  NOT NULL,
 
 		PRIMARY KEY (jid, key_id),
 		FOREIGN KEY (jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -174,7 +174,7 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 		jid     TEXT,
 		name    TEXT,
 		version BIGINT NOT NULL,
-		hash    bytea  NOT NULL CHECK ( length(hash) = 128 ),
+		hash    TEXT  NOT NULL CHECK ( length(hash) = 128 ),
 
 		PRIMARY KEY (jid, name),
 		FOREIGN KEY (jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -186,8 +186,8 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 		jid       TEXT,
 		name      TEXT,
 		version   BIGINT,
-		index_mac bytea          CHECK ( length(index_mac) = 32 ),
-		value_mac bytea NOT NULL CHECK ( length(value_mac) = 32 ),
+		index_mac TEXT          CHECK ( length(index_mac) = 32 ),
+		value_mac TEXT NOT NULL CHECK ( length(value_mac) = 32 ),
 
 		PRIMARY KEY (jid, name, version, index_mac),
 		FOREIGN KEY (jid, name) REFERENCES whatsmeow_app_state_version(jid, name) ON DELETE CASCADE ON UPDATE CASCADE
@@ -246,7 +246,7 @@ UPDATE whatsmeow_device SET adv_account_sig_key=(
 `
 
 func upgradeV2(tx *sql.Tx, container *Container) error {
-	_, err := tx.Exec("ALTER TABLE whatsmeow_device ADD COLUMN adv_account_sig_key bytea CHECK ( length(adv_account_sig_key) = 32 )")
+	_, err := tx.Exec("ALTER TABLE whatsmeow_device ADD COLUMN adv_account_sig_key TEXT CHECK ( length(adv_account_sig_key) = 32 )")
 	if err != nil {
 		return err
 	}
@@ -264,7 +264,7 @@ func upgradeV3(tx *sql.Tx, container *Container) error {
 		chat_jid   TEXT,
 		sender_jid TEXT,
 		message_id TEXT,
-		key        bytea NOT NULL,
+		key        TEXT NOT NULL,
 
 		PRIMARY KEY (our_jid, chat_jid, sender_jid, message_id),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -276,7 +276,7 @@ func upgradeV4(tx *sql.Tx, container *Container) error {
 	_, err := tx.Exec(`CREATE TABLE whatsmeow_privacy_tokens (
 		our_jid   TEXT,
 		their_jid TEXT,
-		token     bytea  NOT NULL,
+		token     TEXT  NOT NULL,
 		timestamp BIGINT NOT NULL,
 		PRIMARY KEY (our_jid, their_jid)
 	)`)
@@ -289,6 +289,6 @@ func upgradeV5(tx *sql.Tx, container *Container) error {
 }
 
 func upgradeV6(tx *sql.Tx, container *Container) error {
-	_, err := tx.Exec("ALTER TABLE whatsmeow_device ADD COLUMN facebook_uuid uuid")
+	_, err := tx.Exec("ALTER TABLE whatsmeow_device ADD COLUMN facebook_uuid varchar(100)")
 	return err
 }
