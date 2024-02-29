@@ -105,6 +105,9 @@ func (cli *Client) NewsletterSendReaction(jid types.JID, serverID types.MessageS
 const (
 	queryFetchNewsletter           = "6563316087068696"
 	queryFetchNewsletterDehydrated = "7272540469429201"
+	queryRecommendedNewsletters    = "7263823273662354" //variables -> input -> {limit: 20, country_codes: [string]}, output: xwa2_newsletters_recommended
+	queryNewslettersDirectory      = "6190824427689257" // variables -> input -> {view: "RECOMMENDED", limit: 50, start_cursor: base64, filters: {country_codes: [string]}}
+	querySubscribedNewsletters     = "6388546374527196" // variables -> empty, output: xwa2_newsletter_subscribed
 	queryNewsletterSubscribers     = "9800646650009898" //variables -> input -> {newsletter_id, count}, output: xwa2_newsletter_subscribers -> subscribers -> edges
 	mutationMuteNewsletter         = "6274038279359549" //variables -> {newsletter_id, updates->{description, settings}}, output: xwa2_newsletter_update -> NewsletterMetadata without viewer meta
 	mutationUnmuteNewsletter       = "6068417879924485"
@@ -159,22 +162,21 @@ type respGetNewsletterInfo struct {
 	Newsletter *types.NewsletterMetadata `json:"xwa2_newsletter"`
 }
 
-func (cli *Client) getNewsletterInfo(input map[string]any) (*types.NewsletterMetadata, error) {
+func (cli *Client) getNewsletterInfo(input map[string]any, fetchViewerMeta bool) (*types.NewsletterMetadata, error) {
 	data, err := cli.sendMexIQ(context.TODO(), queryFetchNewsletter, map[string]any{
 		"fetch_creation_time":   true,
 		"fetch_full_image":      true,
-		"fetch_viewer_metadata": true,
+		"fetch_viewer_metadata": fetchViewerMeta,
 		"input":                 input,
 	})
-	if err != nil {
-		return nil, err
-	}
 	var respData respGetNewsletterInfo
-	err = json.Unmarshal(data, &respData)
-	if err != nil {
-		return nil, err
+	if data != nil {
+		jsonErr := json.Unmarshal(data, &respData)
+		if err == nil && jsonErr != nil {
+			err = jsonErr
+		}
 	}
-	return respData.Newsletter, nil
+	return respData.Newsletter, err
 }
 
 // GetNewsletterInfo gets the info of a newsletter that you're joined to.
@@ -182,17 +184,36 @@ func (cli *Client) GetNewsletterInfo(jid types.JID) (*types.NewsletterMetadata, 
 	return cli.getNewsletterInfo(map[string]any{
 		"key":  jid.String(),
 		"type": types.NewsletterKeyTypeJID,
-	})
+	}, true)
 }
 
 // GetNewsletterInfoWithInvite gets the info of a newsletter with an invite link.
 //
 // You can either pass the full link (https://whatsapp.com/channel/...) or just the `...` part.
+//
+// Note that the ViewerMeta field of the returned NewsletterMetadata will be nil.
 func (cli *Client) GetNewsletterInfoWithInvite(key string) (*types.NewsletterMetadata, error) {
 	return cli.getNewsletterInfo(map[string]any{
 		"key":  strings.TrimPrefix(key, NewsletterLinkPrefix),
 		"type": types.NewsletterKeyTypeInvite,
-	})
+	}, false)
+}
+
+type respGetSubscribedNewsletters struct {
+	Newsletters []*types.NewsletterMetadata `json:"xwa2_newsletter_subscribed"`
+}
+
+// GetSubscribedNewsletters gets the info of all newsletters that you're joined to.
+func (cli *Client) GetSubscribedNewsletters() ([]*types.NewsletterMetadata, error) {
+	data, err := cli.sendMexIQ(context.TODO(), querySubscribedNewsletters, map[string]any{})
+	var respData respGetSubscribedNewsletters
+	if data != nil {
+		jsonErr := json.Unmarshal(data, &respData)
+		if err == nil && jsonErr != nil {
+			err = jsonErr
+		}
+	}
+	return respData.Newsletters, err
 }
 
 type CreateNewsletterParams struct {
