@@ -191,8 +191,8 @@ const (
 	insertDeviceQuery = `INSERT INTO whatsmeow_device (jid, registration_id, noise_key, identity_key,
 		signed_pre_key, signed_pre_key_id, signed_pre_key_sig,
 				adv_key, adv_details, adv_account_sig, adv_account_sig_key, adv_device_sig,
-				platform, business_name, push_name)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				platform, business_name, push_name, facebook_uuid)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 		ON DUPLICATE KEY UPDATE
 		platform = VALUES(platform),
 		business_name = VALUES(business_name),
@@ -237,6 +237,7 @@ func (c *Container) PutDevice(device *store.Device) error {
 	if device.ID == nil {
 		return ErrDeviceIDMustBeSet
 	}
+	fmt.Println()
 	_, err := c.db.Exec(insertDeviceQuery,
 		device.ID.String(), device.RegistrationID, device.NoiseKey.Priv[:], device.IdentityKey.Priv[:],
 		device.SignedPreKey.Priv[:], device.SignedPreKey.KeyID, device.SignedPreKey.Signature[:],
