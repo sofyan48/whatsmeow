@@ -89,21 +89,16 @@ func (c *Container) Upgrade() error {
 func upgradeV1(tx *sql.Tx, _ *Container) error {
 	_, err := tx.Exec(`CREATE TABLE whatsmeow_device (
 		jid VARCHAR(255) PRIMARY KEY,
-
 		registration_id BIGINT NOT NULL CHECK ( registration_id >= 0 AND registration_id < 4294967296 ),
-
 		noise_key    TEXT NOT NULL CHECK ( length(noise_key) = 32 ),
 		identity_key TEXT NOT NULL CHECK ( length(identity_key) = 32 ),
-
 		signed_pre_key     TEXT   NOT NULL CHECK ( length(signed_pre_key) = 32 ),
 		signed_pre_key_id  INTEGER NOT NULL CHECK ( signed_pre_key_id >= 0 AND signed_pre_key_id < 16777216 ),
 		signed_pre_key_sig TEXT   NOT NULL CHECK ( length(signed_pre_key_sig) = 64 ),
-
 		adv_key         TEXT NOT NULL,
 		adv_details     TEXT NOT NULL,
 		adv_account_sig TEXT NOT NULL CHECK ( length(adv_account_sig) = 64 ),
 		adv_device_sig  TEXT NOT NULL CHECK ( length(adv_device_sig) = 64 ),
-
 		platform      VARCHAR(255) NOT NULL DEFAULT 'macos',
 		business_name VARCHAR(255) NOT NULL DEFAULT 'agent',
 		push_name     VARCHAR(255) NOT NULL DEFAULT 'agent'
@@ -251,13 +246,12 @@ func upgradeV2(tx *sql.Tx, container *Container) error {
 
 func upgradeV3(tx *sql.Tx, container *Container) error {
 	_, err := tx.Exec(`CREATE TABLE whatsmeow_message_secrets (
-		our_jid    TEXT,
+		our_jid    VARCHAR(255),
 		chat_jid   TEXT,
 		sender_jid TEXT,
 		message_id TEXT,
-		key        TEXT NOT NULL,
-
-		PRIMARY KEY (our_jid, chat_jid, sender_jid, message_id),
+		key       TEXT NOT NULL,
+		PRIMARY KEY (our_jid),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	return err
@@ -265,11 +259,11 @@ func upgradeV3(tx *sql.Tx, container *Container) error {
 
 func upgradeV4(tx *sql.Tx, container *Container) error {
 	_, err := tx.Exec(`CREATE TABLE whatsmeow_privacy_tokens (
-		our_jid   TEXT,
+		our_jid   VARCHAR(255),
 		their_jid TEXT,
 		token     TEXT  NOT NULL,
 		timestamp BIGINT NOT NULL,
-		PRIMARY KEY (our_jid, their_jid)
+		PRIMARY KEY (our_jid)
 	)`)
 	return err
 }
