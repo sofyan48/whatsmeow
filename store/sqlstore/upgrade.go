@@ -112,33 +112,30 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_identity_keys (
-		our_jid  TEXT,
+		our_jid  VARCHAR(255),
 		their_id TEXT,
 		identity TEXT NOT NULL CHECK ( length(identity) = 32 ),
-
-		PRIMARY KEY (our_jid, their_id),
+		PRIMARY KEY (our_jid),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_pre_keys (
-		jid      TEXT,
-		key_id   INTEGER          CHECK ( key_id >= 0 AND key_id < 16777216 ),
-		key      TEXT   NOT NULL CHECK ( length(key) = 32 ),
-		uploaded BOOLEAN NOT NULL,
-
-		PRIMARY KEY (jid, key_id),
+		jid VARCHAR(255),
+		key_id INT UNSIGNED NOT NULL,
+		key TEXT NULL,
+		uploaded TINYINT(1) NOT NULL,
+		PRIMARY KEY (jid),
 		FOREIGN KEY (jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_sessions (
-		our_jid  TEXT,
-		their_id TEXT,
+		our_jid  VARCHAR(255),
+		their_id VARCHAR(255),
 		session  TEXT,
-
 		PRIMARY KEY (our_jid, their_id),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
@@ -146,36 +143,33 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_sender_keys (
-		our_jid    TEXT,
-		chat_id    TEXT,
-		sender_id  TEXT,
+		our_jid    VARCHAR(255),
+		chat_id    TEXT ,
+		sender_id  VARCHAR(255),
 		sender_key TEXT NOT NULL,
-
-		PRIMARY KEY (our_jid, chat_id, sender_id),
+		PRIMARY KEY (our_jid, sender_id),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_app_state_sync_keys (
-		jid         TEXT,
-		key_id      TEXT,
+		jid         VARCHAR(255),
+		key_id      TEXT NOT NULL,
 		key_data    TEXT  NOT NULL,
 		timestamp   BIGINT NOT NULL,
 		fingerprint TEXT  NOT NULL,
-
-		PRIMARY KEY (jid, key_id),
+		PRIMARY KEY (jid),
 		FOREIGN KEY (jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_app_state_version (
-		jid     TEXT,
-		name    TEXT,
+		jid     VARCHAR(255),
+		name    VARCHAR(255),
 		version BIGINT NOT NULL,
 		hash    TEXT  NOT NULL CHECK ( length(hash) = 128 ),
-
 		PRIMARY KEY (jid, name),
 		FOREIGN KEY (jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
@@ -183,40 +177,37 @@ func upgradeV1(tx *sql.Tx, _ *Container) error {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_app_state_mutation_macs (
-		jid       TEXT,
-		name      TEXT,
+		jid       VARCHAR(255),
+		name      VARCHAR(255),
 		version   BIGINT,
 		index_mac TEXT          CHECK ( length(index_mac) = 32 ),
 		value_mac TEXT NOT NULL CHECK ( length(value_mac) = 32 ),
-
-		PRIMARY KEY (jid, name, version, index_mac),
+		PRIMARY KEY (jid),
 		FOREIGN KEY (jid, name) REFERENCES whatsmeow_app_state_version(jid, name) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_contacts (
-		our_jid       TEXT,
+		our_jid       VARCHAR(255),
 		their_jid     TEXT,
 		first_name    TEXT,
 		full_name     TEXT,
 		push_name     TEXT,
 		business_name TEXT,
-
-		PRIMARY KEY (our_jid, their_jid),
+		PRIMARY KEY (our_jid),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
 		return err
 	}
 	_, err = tx.Exec(`CREATE TABLE whatsmeow_chat_settings (
-		our_jid       TEXT,
+		our_jid       VARCHAR(255),
 		chat_jid      TEXT,
 		muted_until   BIGINT  NOT NULL DEFAULT 0,
 		pinned        BOOLEAN NOT NULL DEFAULT false,
 		archived      BOOLEAN NOT NULL DEFAULT false,
-
-		PRIMARY KEY (our_jid, chat_jid),
+		PRIMARY KEY (our_jid),
 		FOREIGN KEY (our_jid) REFERENCES whatsmeow_device(jid) ON DELETE CASCADE ON UPDATE CASCADE
 	)`)
 	if err != nil {
