@@ -7,13 +7,8 @@ toolchain go1.22.0
 require (
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/mdp/qrterminal/v3 v3.0.0
-<<<<<<< HEAD
-	github.com/sofyan48/whatsmeow v0.0.0-20230805111647-405414b9b5c0
-	google.golang.org/protobuf v1.32.0
-=======
 	go.mau.fi/whatsmeow v0.0.0-20230805111647-405414b9b5c0
 	google.golang.org/protobuf v1.33.0
->>>>>>> 46bcca7a487dcfb6a037b297b4b449963417ed61
 )
 
 require (
