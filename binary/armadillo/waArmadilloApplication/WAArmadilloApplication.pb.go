@@ -7,6 +7,9 @@
 package waArmadilloApplication
 
 import (
+	reflect "reflect"
+	sync "sync"
+	
 	waArmadilloXMA "github.com/sofyan48/whatsmeow/binary/armadillo/waArmadilloXMA"
 	waCommon "github.com/sofyan48/whatsmeow/binary/armadillo/waCommon"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

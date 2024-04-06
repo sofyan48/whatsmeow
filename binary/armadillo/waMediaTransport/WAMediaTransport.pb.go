@@ -7,6 +7,9 @@
 package waMediaTransport
 
 import (
+	reflect "reflect"
+	sync "sync"
+	
 	waCommon "github.com/sofyan48/whatsmeow/binary/armadillo/waCommon"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"

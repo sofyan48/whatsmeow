@@ -7,6 +7,9 @@
 package waE2E
 
 import (
+	reflect "reflect"
+	sync "sync"
+	
 	waAdv "github.com/sofyan48/whatsmeow/binary/armadillo/waAdv"
 	waCommon "github.com/sofyan48/whatsmeow/binary/armadillo/waCommon"
 	waMmsRetry "github.com/sofyan48/whatsmeow/binary/armadillo/waMmsRetry"
